@@ -1,13 +1,12 @@
 ﻿using System;
+using Tetris.Events;
 using Tetris.Models;
 
 namespace Tetris.Commands
 {
-    internal class HardDropCommand(GameState gameState) : ICommand
+    public class HardDropCommand(GameState gameState) : ICommand
     {
         private readonly GameState _gameState = gameState;
-
-        public event Action<bool> OnPieceDrop;
 
         public void Execute()
         {
@@ -22,7 +21,7 @@ namespace Tetris.Commands
 
             _gameState.ChangePiece();
 
-            OnPieceDrop?.Invoke(true); // Evento para reproducir sonido de caida
+            GameEvents.TriggerPieceHardDropped();
         }
     }
 }

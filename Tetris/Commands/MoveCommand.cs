@@ -1,5 +1,6 @@
 ﻿using System;
 using Tetris.Enums;
+using Tetris.Events;
 using Tetris.Models;
 
 namespace Tetris.Commands
@@ -8,8 +9,6 @@ namespace Tetris.Commands
     {
         private readonly GameState _gameState = gameState;
         private readonly Direction _direction = direction;
-
-        public event Action<bool> OnPieceMove;
 
         public void Execute()
         {
@@ -23,13 +22,9 @@ namespace Tetris.Commands
                 _gameState.CurrentPiece.ApplyMove(simulatedCoords);
 
                 if (_direction == Direction.Left || _direction == Direction.Right)
-                {
-                    var ghostCoords = _gameState.CalculateGhostPiece();
-                    gameBoard.GhostCoords = ghostCoords;
+                    gameBoard.GhostCoords = _gameState.CalculateGhostPiece();
 
-                }
-
-                OnPieceMove?.Invoke(true); // Evento para reproducir sonido de movimiento
+                GameEvents.TriggerPieceMoved();
             }
         }
     }

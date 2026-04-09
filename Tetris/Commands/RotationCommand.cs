@@ -1,4 +1,5 @@
 ﻿using System;
+using Tetris.Events;
 using Tetris.Models;
 
 namespace Tetris.Commands
@@ -6,8 +7,6 @@ namespace Tetris.Commands
     public class RotationCommand(GameState gameState) : ICommand
     {
         private readonly GameState _gameState = gameState;
-
-        public event Action<bool> OnPieceRotate;
 
         public void Execute()
         {
@@ -19,11 +18,9 @@ namespace Tetris.Commands
             if (!gameBoard.HasCollision(simulatedCoords))
             {
                 currentPiece.ApplyMove(simulatedCoords);
+                gameBoard.GhostCoords = _gameState.CalculateGhostPiece();
 
-                var ghostCoords = _gameState.CalculateGhostPiece();
-                gameBoard.GhostCoords = ghostCoords;
-
-                OnPieceRotate?.Invoke(true); // Evento para reproducir sonido de rotación
+                GameEvents.TriggerPieceRotated();
             }
         }
     }
