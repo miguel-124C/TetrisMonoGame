@@ -1,5 +1,4 @@
-﻿using System;
-using Tetris.Events;
+﻿using Tetris.Events;
 using Tetris.Models;
 
 namespace Tetris.Commands

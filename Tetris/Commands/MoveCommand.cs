@@ -1,5 +1,4 @@
-﻿using System;
-using Tetris.Enums;
+﻿using Tetris.Enums;
 using Tetris.Events;
 using Tetris.Models;
 
