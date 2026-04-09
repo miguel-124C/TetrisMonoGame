@@ -1,37 +1,43 @@
-﻿using Tetris.Events;
+﻿using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Tetris.Events;
 
 namespace Tetris.Managers
 {
     public class AudioManager
     {
-        public AudioManager()
+        private SoundEffect _moveSound;
+        private SoundEffect _rotateSound;
+        private SoundEffect _hardDropSound;
+        private SoundEffect _lineClearSound;
+        private SoundEffect _tetrisSound;
+
+        private readonly string pathSounds;
+
+        public AudioManager(string pathSoundEffects)
         {
-            // Se suscribe UNA sola vez al inicio del juego
+            this.pathSounds = pathSoundEffects;
+
             GameEvents.OnPieceMoved += PlayMoveSound;
             GameEvents.OnPieceRotated += PlayRotateSound;
-            GameEvents.OnPieceHardDropped += PlayDropSound;
+            GameEvents.OnPieceHardDropped += PlayHardDropSound;
             GameEvents.OnLineClear += PlayLineClearSound;
             GameEvents.OnTetris4Lines += PlayTetrisSound;
         }
 
-        private void PlayRotateSound()
+        public void LoadContent(ContentManager content)
         {
+            _moveSound = content.Load<SoundEffect>($"{pathSounds}/move_piece");
+            _rotateSound = content.Load<SoundEffect>($"{pathSounds}/rotate_piece");
+            _hardDropSound = content.Load<SoundEffect>($"{pathSounds}/piece_landed");
+            _lineClearSound = content.Load<SoundEffect>($"{pathSounds}/line_clear");
+            _tetrisSound = content.Load<SoundEffect>($"{pathSounds}/tetris_4_lines");
         }
 
-        private void PlayDropSound()
-        {
-        }
-
-        private void PlayMoveSound()
-        {
-        }
-
-        private void PlayLineClearSound()
-        {
-        }
-
-        private void PlayTetrisSound()
-        {
-        }
+        private void PlayRotateSound() => _rotateSound.Play();
+        private void PlayHardDropSound() => _hardDropSound.Play();
+        private void PlayMoveSound() => _moveSound.Play();
+        private void PlayLineClearSound() => _lineClearSound.Play();
+        private void PlayTetrisSound() => _tetrisSound.Play();
     }
 }
