@@ -23,6 +23,9 @@ namespace Tetris.Commands
                 if (_direction == Direction.Left || _direction == Direction.Right)
                     gameBoard.GhostCoords = _gameState.CalculateGhostPiece();
 
+                if (_direction == Direction.Down)
+                    _gameState.AddScore(1);
+
                 GameEvents.TriggerPieceMoved();
             }
         }
