@@ -15,7 +15,10 @@ namespace Tetris.Controllers
 
         public void Update(GameTime gameTime)
         {
-            if (_gameState.CurrentStatus == GameStatus.Playing)
+            if (_gameState.CurrentStatus == GameStatus.Menu)
+            {
+                HandleInputInMenu();
+            } else if (_gameState.CurrentStatus == GameStatus.Playing)
             {
                 HandleInputInPlaying(gameTime);
             }
@@ -58,6 +61,15 @@ namespace Tetris.Controllers
                 }
             }
             else ElapsedTime = 0f;
+
+            _previousKeyboardState = currentKeyboardState;
+        }
+
+        private void HandleInputInMenu()
+        {
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+            if (IsKeyPressed(Keys.Enter, currentKeyboardState))
+                _gameState.StartGame();
 
             _previousKeyboardState = currentKeyboardState;
         }
