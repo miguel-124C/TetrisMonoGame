@@ -6,6 +6,7 @@ using Tetris.Enums;
 using Tetris.Helpers;
 using Tetris.Managers;
 using Tetris.Models;
+using Tetris.Views;
 
 namespace Tetris
 {
@@ -17,6 +18,8 @@ namespace Tetris
         private GameState _gameState;
         private InputManager _inputManager;
         private AudioManager _audioManager;
+
+        private SceneManager _sceneRenderer;
 
         public TetrisGame()
         {
@@ -33,6 +36,7 @@ namespace Tetris
             _gameState = new GameState(board, pieceGenerator);
             _inputManager = new InputManager(_gameState);
             _audioManager = new AudioManager("soundEffects");
+            _sceneRenderer = new SceneManager(_gameState, _graphics);
 
             base.Initialize();
         }
@@ -41,6 +45,7 @@ namespace Tetris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _audioManager.LoadContent(this.Content);
+            _sceneRenderer.LoadContent(this.Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -57,10 +62,11 @@ namespace Tetris
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            _sceneRenderer.Draw(_spriteBatch, gameTime);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
 }
+
