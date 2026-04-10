@@ -11,7 +11,7 @@ namespace Tetris.Models
         public PieceType Type { get; private set; } = type;
 
         private readonly int _pivotIndex = pivotIndex;
-        private readonly bool _canRotate = canRotate;
+        public bool CanRotate { get; private set; } = canRotate;
 
         public static Piece Create(PieceType type) // Factory method to create a new piece based on the type
         {
@@ -38,7 +38,7 @@ namespace Tetris.Models
 
         public Coordinate[] GetSimulatedRotation()
         {
-            if (!_canRotate) return Cords;
+            if (!CanRotate) return Cords;
 
             // Obtenemos el pivote actual usando el índice
             Coordinate pivot = Cords[_pivotIndex];
