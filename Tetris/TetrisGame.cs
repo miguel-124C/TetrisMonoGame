@@ -18,6 +18,7 @@ namespace Tetris
         private GameState _gameState;
         private InputManager _inputManager;
         private AudioManager _audioManager;
+        private ScoreManager _scoreManager;
 
         private SceneManager _sceneRenderer;
 
@@ -37,6 +38,7 @@ namespace Tetris
             _inputManager = new InputManager(_gameState);
             _audioManager = new AudioManager("soundEffects");
             _sceneRenderer = new SceneManager(_gameState, _graphics);
+            _scoreManager = new ScoreManager(_gameState);
 
             base.Initialize();
         }
