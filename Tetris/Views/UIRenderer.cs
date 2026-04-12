@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Tetris.Helpers;
 using Tetris.Models;
 
 namespace Tetris.Views
@@ -10,6 +11,8 @@ namespace Tetris.Views
     {
         private readonly GameState _gameState;
         private readonly GraphicsDeviceManager _gdm;
+
+        private readonly int _blockSize = Constants.BlockSize;
 
         private readonly Vector2 _uiOffset = new(456, 19);
         private readonly int WidthUi = 150;
@@ -66,10 +69,30 @@ namespace Tetris.Views
 
             var widthNextPieceBox = 140;
             var heightNextPieceBox = 140;
-            var position = new Rectangle(x, y, widthNextPieceBox, heightNextPieceBox);
-            spriteBatch.Draw(_blankTexture, position, Color.DarkBlue);
 
-            //_nextPiece.Cords;
+            DrawBox(spriteBatch, new Rectangle(x, y, widthNextPieceBox, heightNextPieceBox), Color.DarkBlue);
+
+            if (_nextPiece == null) return;
+
+            int minX = _nextPiece.GetCoordMaxLeft();
+            int maxX = _nextPiece.GetCoordMaxRight();
+            int minY = _nextPiece.GetCoordMaxBottom();
+            int maxY = _nextPiece.GetCoordMaxTop();
+
+            int pieceWidth = (maxX - minX + 1) * _blockSize;
+            int pieceHeight = (maxY - minY + 1) * _blockSize;
+
+            int startX = x + (widthNextPieceBox - pieceWidth) / 2;
+            int startY = y + (heightNextPieceBox - pieceHeight) / 2;
+
+            Color pieceColor = _nextPiece.Color.ToXnaColor();
+            foreach (var cord in _nextPiece.Cords)
+            {
+                int drawX = startX + ((cord.X - minX) * _blockSize);
+                int drawY = startY + ((cord.Y - minY) * _blockSize);
+
+                DrawBox(spriteBatch, new Rectangle(drawX, drawY, _blockSize, _blockSize), pieceColor);
+            }
         }
 
         private void DrawLevel(SpriteBatch spriteBatch)
@@ -91,17 +114,23 @@ namespace Tetris.Views
         )
         {
             var position = new Rectangle(x, y, width, height);
-            spriteBatch.Draw(_blankTexture, position, Color.DarkBlue);
+            DrawBox(spriteBatch, position, Color.DarkBlue);
 
             var heightText = _font.MeasureString(text).Y;
             var positionText = new Vector2(position.X + 5, (position.Y + (height - heightText) / 2));
             spriteBatch.DrawString(_font, text, positionText, Color.White);
         }
 
+        private void DrawBox(SpriteBatch spriteBatch, Rectangle position, Color color)
+            => spriteBatch.Draw(_blankTexture, position, color);
+
         private void UpdateScoreText(int newScore) => _scoreText = $"Score:\n{newScore}";
         private void UpdateLinesText(int newLines) => _linesText = $"Lines:\n{newLines}";
         private void UpdateLevelText(int newLevel) => _levelText = $"Level:\n{newLevel}";
-        private void UpdateNextPiece(Piece newNextPiece) => _nextPiece = newNextPiece;
+        private void UpdateNextPiece(Piece newNextPiece) {
+            _nextPiece = newNextPiece;
+            _gameState.GameBoard.GhostCoords = _gameState.CalculateGhostPiece();
+        }
 
         public void UnLoad()
         {
