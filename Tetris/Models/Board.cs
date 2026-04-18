@@ -39,17 +39,13 @@ namespace Tetris.Models
 
         public bool HasCollision(Coordinate[] simulatedCoords)
         {
-            var coordMaxTop = simulatedCoords.Max(c => c.Y); // Cordenada mas cercana al piso
             foreach (var cord in simulatedCoords)
             {
                 if (cord.X < 0 || cord.X > Col - 1) return true; // 1. Validar paredes (salida de la matriz)
                 if (cord.Y > Row - 1) return true; // 2. Validar piso
 
-                // 3. Si su cordenada mas cercana al piso es mayor al HighestRow no hay colision con bloques fijos
-                if (coordMaxTop > HighestRow) return false;
-
                 var value = GetValue(cord.X, cord.Y);
-                if (value != Empty) return true; // 4. Validar si value tiene un bloque fijo distinto a _empty
+                if (value != Empty) return true; // 3. Validar si value tiene un bloque fijo distinto a _empty
             }
             return false;
         }
