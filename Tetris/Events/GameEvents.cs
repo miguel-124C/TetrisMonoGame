@@ -11,6 +11,14 @@ namespace Tetris.Events
         public static event Action OnPieceHardDropped;
         public static event Action OnLineClear;
         public static event Action OnTetris4Lines;
+        public static event Action OnLevelUp;
+        public static event Action OnGameOver;
+
+        public static event Action OnTetrisTheme;
+
+        public static event Action OnPieceLanded;
+        public static event Action OnResetGravityTimer;
+        public static event Action OnPieceTouchedFloor;
 
         // Métodos para "Gritar" el evento
         public static void TriggerPieceMoved() => OnPieceMoved?.Invoke();
@@ -18,5 +26,12 @@ namespace Tetris.Events
         public static void TriggerPieceHardDropped() => OnPieceHardDropped?.Invoke();
         public static void TriggerLineClear() => OnLineClear?.Invoke();
         public static void TriggerTetris4Lines() => OnTetris4Lines?.Invoke();
+        public static void TriggerLevelUp() => OnLevelUp?.Invoke();
+        public static void TriggerTetrisTheme() => OnTetrisTheme?.Invoke();
+
+        public static void TriggerPieceLanded() => OnPieceLanded?.Invoke();
+        public static void TriggerResetGravityTimer() => OnResetGravityTimer?.Invoke();
+        public static void TriggerPieceTouchedFloor() => OnPieceTouchedFloor?.Invoke();
+        public static void TriggerGameOver() => OnGameOver?.Invoke();
     }
 }
