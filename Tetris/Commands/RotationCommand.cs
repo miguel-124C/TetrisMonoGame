@@ -11,8 +11,10 @@ namespace Tetris.Commands
 
         public void Execute()
         {
-            var gameBoard = _gameState.GameBoard;
             var currentPiece = _gameState.CurrentPiece;
+            if (!currentPiece.CanRotate) return;
+
+            var gameBoard = _gameState.GameBoard;
             var previousCoords = currentPiece.Cords;
 
             var simulatedCoords = currentPiece.GetSimulatedRotation();
@@ -47,9 +49,7 @@ namespace Tetris.Commands
         {
             currentPiece.ApplyMove(simulatedCoords);
             gameBoard.GhostCoords = _gameState.CalculateGhostPiece();
-
-            if (currentPiece.CanRotate)
-                GameEvents.TriggerPieceRotated();
+            GameEvents.TriggerPieceRotated();
         }
 
         private Direction GetDirectionX(Piece currentPiece)
