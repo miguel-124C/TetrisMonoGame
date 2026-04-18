@@ -87,3 +87,9 @@
 /processorParam:Quality=Best
 /build:soundEffects/tetris_4_lines.wav
 
+#begin soundEffects/tetrisTheme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundEffects/tetrisTheme.wav
+
