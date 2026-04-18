@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Tetris.Enums;
+using Tetris.Events;
 using Tetris.Helpers;
 
 namespace Tetris.Models
@@ -15,6 +16,8 @@ namespace Tetris.Models
         public event Action<int> OnLinesChanged;
         public event Action<Piece> OnNextPieceChanged;
         public event Action<GameStatus> OnStatusChanged;
+
+        public event Action<double> OnChangedTimeDrop;
 
         public Piece CurrentPiece { get; private set; }
 
@@ -47,7 +50,11 @@ namespace Tetris.Models
             private set
             {
                 _level = value;
+                var timeDrop = GetTimeDrop();
+                OnChangedTimeDrop?.Invoke(timeDrop);
                 OnLevelChanged?.Invoke(_level);
+                if (_level > 1)
+                    GameEvents.TriggerLevelUp();
             }
         }
 
@@ -82,6 +89,7 @@ namespace Tetris.Models
 
             InitializePiece();
             CurrentStatus = GameStatus.Playing;
+            GameEvents.TriggerTetrisTheme();
         }
 
         public void TogglePause()
@@ -92,10 +100,7 @@ namespace Tetris.Models
                 CurrentStatus = GameStatus.Playing;
         }
 
-        public void TriggerGameOver()
-        {
-            CurrentStatus = GameStatus.GameOver;
-        }
+        public void TriggerGameOver() => CurrentStatus = GameStatus.GameOver;
 
         public void ChangePiece()
         {
@@ -103,10 +108,7 @@ namespace Tetris.Models
             NextPiece = PieceGenerator.GetNextPiece();
         }
 
-        public void AddScore(int amount)
-        {
-            Score += amount;
-        }
+        public void AddScore(int amount) => Score += amount;
 
         public void AddLines(int amount)
         {
