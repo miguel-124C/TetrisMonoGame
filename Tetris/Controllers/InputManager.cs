@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Tetris.Commands;
-using Tetris.Models;
 using Tetris.Enums;
+using Tetris.Models;
 
 namespace Tetris.Controllers
 {
@@ -75,8 +75,6 @@ namespace Tetris.Controllers
         }
 
         private bool IsKeyPressed(Keys key, KeyboardState currentState)
-        {
-            return currentState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key);
-        }
+            => currentState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key);
     }
 }
