@@ -1,6 +1,4 @@
-﻿using System;
-using Tetris.Enums;
-using Tetris.Events;
+﻿using Tetris.Events;
 using Tetris.Models;
 
 namespace Tetris.Commands
@@ -24,10 +22,8 @@ namespace Tetris.Commands
             var amountOfRowsDropped = maxTopInGhost - maxTopPreviusDropped;
             _gameState.AddScore(amountOfRowsDropped * 2);
 
-            gameBoard.InsertPiece(currentPiece);
-            gameBoard.CheckAndClearLines();
-
-            _gameState.ChangePiece();
+            GameEvents.TriggerPieceLanded();
+            GameEvents.TriggerResetGravityTimer();
 
             GameEvents.TriggerPieceHardDropped();
         }
