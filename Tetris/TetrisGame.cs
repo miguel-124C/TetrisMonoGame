@@ -18,7 +18,7 @@ namespace Tetris
         private GameState _gameState;
         private InputManager _inputManager;
         private AudioManager _audioManager;
-        private ScoreManager _scoreManager;
+        private GameLoopManager _gameLoopManager;
 
         private SceneManager _sceneRenderer;
 
@@ -38,7 +38,9 @@ namespace Tetris
             _inputManager = new InputManager(_gameState);
             _audioManager = new AudioManager("soundEffects");
             _sceneRenderer = new SceneManager(_gameState, _graphics);
-            _scoreManager = new ScoreManager(_gameState);
+
+            _ = new ScoreManager(_gameState);
+            _gameLoopManager = new GameLoopManager(_gameState);
 
             base.Initialize();
         }
@@ -57,6 +59,9 @@ namespace Tetris
                 Exit();
 
             _inputManager.Update(gameTime);
+            
+            if (_gameState.CurrentStatus == GameStatus.Playing)
+                _gameLoopManager.Update(gameTime);
 
             base.Update(gameTime);
         }
