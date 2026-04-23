@@ -25,19 +25,26 @@
 /processorParam:TextureFormat=Color
 /build:Backgrounds/menuBg.png
 
-#begin Fonts/FontMain.spritefont
+#begin Fonts/Arial12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/FontMain.spritefont
+/build:Fonts/Arial12.spritefont
 
-#begin Fonts/UIFont.spritefont
+#begin Fonts/Arial18.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/UIFont.spritefont
+/build:Fonts/Arial18.spritefont
+
+#begin Fonts/Arial48.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Arial48.spritefont
 
 #begin soundEffects/game_over.wav
 /importer:WavImporter
