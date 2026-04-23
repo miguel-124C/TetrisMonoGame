@@ -36,7 +36,7 @@ namespace Tetris.Views
 
         public override void LoadContent()
         {
-            base.LoadBasicContent();
+            LoadBasicContent();
         }
     }
 }

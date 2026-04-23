@@ -51,7 +51,7 @@ namespace Tetris.Views.Gameplay
         }
 
         public override void LoadContent(){
-            base.LoadBasicContent();
+            LoadBasicContent();
         }
 
         private void DrawScore(SpriteBatch spriteBatch)

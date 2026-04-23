@@ -19,7 +19,7 @@ namespace Tetris.Views.Gameplay
         private readonly int _gridSize = 2;
 
         public override void LoadContent(){
-            base.LoadBasicContent();
+            LoadBasicContent();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
