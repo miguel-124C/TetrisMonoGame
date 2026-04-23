@@ -1,77 +1,42 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Tetris.Models;
-using Tetris.Enums;
+using System;
 
 namespace Tetris.Views
 {
     public class MenuRenderer
-        (GameState gameState, GraphicsDeviceManager graphicsDeviceManager)
-        : IRenderer
+        (GraphicsDeviceManager gdm, ContentManager cm) : IRenderer(gdm, cm)
     {
-        private readonly GameState _gameState = gameState;
-        private readonly GraphicsDeviceManager _graphicsDeviceManager = graphicsDeviceManager;
-
-        private Texture2D _backgroundMenu;
-        private SpriteFont _spriteFont;
-
-        public void LoadContent(ContentManager content)
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            _spriteFont = content.Load<SpriteFont>("Fonts/FontMain");
-            _backgroundMenu = content.Load<Texture2D>("Backgrounds/menuBg");
-        }
+            float alpha = (float)Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 3));
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            switch (_gameState.CurrentStatus)
-            {
-                case GameStatus.Menu:
-                    ShowMenu(spriteBatch);
-                    break;
-                case GameStatus.Paused:
-                    ShowPause(spriteBatch);
-                    break;
-                case GameStatus.GameOver:
-                    ShowGameOver(spriteBatch);
-                    break;
-            }
-        }
-
-        private void ShowMenu(SpriteBatch spriteBatch)
-        {
             var titleGame = "Tetris";
             var instruction = "Press Enter to Start";
 
-            var width = _graphicsDeviceManager.PreferredBackBufferWidth;
-            var height = _graphicsDeviceManager.PreferredBackBufferHeight;
+            var sizeTitle = _spriteFont48.MeasureString(titleGame);
+            var titleGameY = (_height - sizeTitle.Y) / 2;
+            var positionTitle = new Vector2((_width - sizeTitle.X) / 2, titleGameY);
 
-            var sizeTitle = _spriteFont.MeasureString(titleGame);
-            var titleGameY = (height - sizeTitle.Y) / 2;
-            var positionTitle = new Vector2((width - sizeTitle.X) / 2, titleGameY);
-
-            var sizeInstruction = _spriteFont.MeasureString(instruction);
-            var positionInstruction = new Vector2((width - sizeInstruction.X) / 2,
+            var sizeInstruction = _spriteFont18.MeasureString(instruction);
+            var positionInstruction = new Vector2((_width - sizeInstruction.X) / 2,
                 (titleGameY + sizeTitle.Y) + 50);
 
-            spriteBatch.Draw(_backgroundMenu, new Rectangle(0, 0, width, height), Color.White);
+            spriteBatch.Draw(_blankTexture, new Rectangle(0, 0, _width, _height), new Color(15, 15, 15));
 
-            spriteBatch.DrawString(_spriteFont, titleGame, positionTitle, Color.White);
-            spriteBatch.DrawString(_spriteFont, instruction, positionInstruction, Color.White);
+            spriteBatch.DrawString(_spriteFont48, titleGame, positionTitle, Color.White);
+            spriteBatch.DrawString(_spriteFont18, instruction, positionInstruction, Color.White * alpha);
         }
 
-        private void ShowPause(SpriteBatch spriteBatch)
-        {
-
-        }
-
-        private void ShowGameOver(SpriteBatch spriteBatch)
-        {
-        }
-
-        public void UnLoad()
+        public override void UnLoad()
         {
             throw new System.NotImplementedException();
+        }
+
+        public override void LoadContent()
+        {
+            base.LoadBasicContent();
         }
     }
 }

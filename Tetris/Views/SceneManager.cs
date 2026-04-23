@@ -1,64 +1,66 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Tetris.Enums;
 using Tetris.Models;
+using Tetris.Views.Gameplay;
 
 namespace Tetris.Views
 {
     public class SceneManager
     {
-        public IRenderer CurrentRenderer { get; private set; }
+        private readonly GameState _gameState;
 
-        private GameState _gameState;
-        private GraphicsDeviceManager _gdm;
+        private readonly MenuRenderer _menuRenderer;
+        private readonly GameOverRenderer _gameOverRenderer;
+        private readonly CountDownRenderer _countDownRenderer;
+        private readonly GameplayRenderer _gamePlayRenderer;
+        private readonly PauseRenderer _pauseRenderer;
 
-        private MenuRenderer _menuRenderer;
-        private GameplayRenderer _gamePlayRenderer;
-
-
-        public SceneManager(GameState gameState, GraphicsDeviceManager gdm)
+        public SceneManager(GameState gameState, GraphicsDeviceManager gdm, ContentManager content)
         {
             _gameState = gameState;
-            _gdm = gdm;
-            _gameState.OnStatusChanged += ChangeScene;
+            //_gameState.OnStatusChanged += ChangeScene;
 
-            _menuRenderer = new MenuRenderer(_gameState, _gdm);
-            _gamePlayRenderer = new GameplayRenderer(_gameState, _gdm);
-
-            ChangeScene(_gameState.CurrentStatus);
+            _menuRenderer = new MenuRenderer(gdm, content);
+            _gamePlayRenderer = new GameplayRenderer(_gameState, gdm, content);
+            _gameOverRenderer = new GameOverRenderer(_gameState, gdm, content);
+            _countDownRenderer = new CountDownRenderer(_gameState, gdm, content);
+            _pauseRenderer = new PauseRenderer(gdm, content);
         }
 
-        public void LoadContent(ContentManager content)
+        public void LoadContent()
         {
-            _menuRenderer.LoadContent(content);
-            _gamePlayRenderer.LoadContent(content);
+            _menuRenderer.LoadContent();
+            _gamePlayRenderer.LoadContent();
+            _gameOverRenderer.LoadContent();
+            _countDownRenderer.LoadContent();
+            _pauseRenderer.LoadContent();
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            if (_gameState.CurrentStatus == GameStatus.Paused
-                || _gameState.CurrentStatus == GameStatus.GameOver
-                || _gameState.CurrentStatus == GameStatus.Countdown
-            )
+            switch (_gameState.CurrentStatus)
             {
-                // El juego
-                CurrentRenderer.Draw(spriteBatch, gameTime);
-            } else
-                CurrentRenderer.Draw(spriteBatch, gameTime);
-        }
-
-        public void ChangeScene(GameStatus gameState)
-        {
-            CurrentRenderer = gameState switch
-            {
-                GameStatus.Menu => _menuRenderer,
-                GameStatus.Paused => _menuRenderer,
-                GameStatus.GameOver => _menuRenderer,
-                GameStatus.Playing => _gamePlayRenderer,
-                _ => throw new NotImplementedException($"Scene for {gameState} is not implemented yet.")
-            };
+                case GameStatus.Menu:
+                    _menuRenderer.Draw(spriteBatch, gameTime);
+                    break;
+                case GameStatus.Playing:
+                    _gamePlayRenderer.Draw(spriteBatch, gameTime);
+                    break;
+                case GameStatus.Paused:
+                    _gamePlayRenderer.Draw(spriteBatch, gameTime);
+                    _pauseRenderer.Draw(spriteBatch, gameTime);
+                    break;
+                case GameStatus.GameOver:
+                    _gamePlayRenderer.Draw(spriteBatch, gameTime);
+                    _gameOverRenderer.Draw(spriteBatch, gameTime);
+                    break;
+                case GameStatus.Countdown:
+                    _gamePlayRenderer.Draw(spriteBatch, gameTime);
+                    _countDownRenderer.Draw(spriteBatch, gameTime);
+                    break;
+            }
         }
     }
 }
