@@ -17,6 +17,8 @@ namespace Tetris.Managers
         private SoundEffect _gameTheme;
         private SoundEffectInstance _instanceTheme;
 
+        private bool IsPlayTheme = false;
+
         private readonly string pathSounds;
 
         public AudioManager(string pathSoundEffects)
@@ -29,7 +31,8 @@ namespace Tetris.Managers
             GameEvents.OnLineClear += PlayLineClearSound;
             GameEvents.OnLevelUp += PlayLevelUpSound;
             GameEvents.OnTetris4Lines += PlayTetrisSound;
-            GameEvents.OnTetrisTheme += PlayTetrisTheme;
+            GameEvents.OnTetrisThemePlay += PlayTetrisTheme;
+            GameEvents.OnTetrisThemeTogglePause += TogglePauseTetrisTheme;
             GameEvents.OnGameOver += PlayGameOverSound;
         }
 
@@ -42,6 +45,7 @@ namespace Tetris.Managers
             _tetrisSound = content.Load<SoundEffect>($"{pathSounds}/tetris_4_lines");
             _levelUpSound = content.Load<SoundEffect>($"{pathSounds}/level_up");
             _gameTheme = content.Load<SoundEffect>($"{pathSounds}/tetrisTheme");
+            _instanceTheme = _gameTheme.CreateInstance();
             _gameOverSound = content.Load<SoundEffect>($"{pathSounds}/game_over");
         }
 
@@ -53,9 +57,20 @@ namespace Tetris.Managers
         private void PlayTetrisSound() => _tetrisSound.Play();
         private void PlayTetrisTheme()
         {
-            _instanceTheme = _gameTheme.CreateInstance();
             _instanceTheme.IsLooped = true;
             _instanceTheme.Play();
+            _instanceTheme.Pause();
+            IsPlayTheme = true;
+        }
+
+        private void TogglePauseTetrisTheme()
+        {
+            IsPlayTheme = !IsPlayTheme;
+            
+            if (IsPlayTheme)
+                _instanceTheme.Pause();
+            else
+                _instanceTheme.Resume();
         }
 
         private void PlayGameOverSound()
