@@ -21,7 +21,7 @@ namespace Tetris.Controllers
             else if (_gameState.CurrentStatus == GameStatus.Playing)
                 HandleInputInPlaying(gameTime);
             else if (_gameState.CurrentStatus == GameStatus.Paused)
-                HandleInputInPaused();
+                HandleInputInPaused(closeGame);
             else if (_gameState.CurrentStatus == GameStatus.GameOver)
                 HandleInputInGameOver(closeGame);
         }
@@ -78,10 +78,12 @@ namespace Tetris.Controllers
             _previousKeyboardState = currentKeyboardState;
         }
 
-        private void HandleInputInPaused()
+        private void HandleInputInPaused(Action closeGame)
         {
             KeyboardState currentKeyboardState = Keyboard.GetState();
             if (IsKeyPressed(Keys.Escape, currentKeyboardState))
+                closeGame();
+            else if (IsKeyPressed(Keys.Enter, currentKeyboardState))
                 _gameState.TogglePause();
 
             _previousKeyboardState = currentKeyboardState;
