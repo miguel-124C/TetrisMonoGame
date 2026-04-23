@@ -84,6 +84,11 @@ namespace Tetris.Models
             return _grid[y, x];
         }
 
+        public void Clear()
+        {
+            InitGrid();
+            HighestRow = Row;
+        }
 
         private void InitGrid()
         {

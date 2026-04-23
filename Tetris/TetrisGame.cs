@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Tetris.Controllers;
 using Tetris.Enums;
 using Tetris.Helpers;
@@ -37,7 +36,7 @@ namespace Tetris
             _gameState = new GameState(board, pieceGenerator);
             _inputManager = new InputManager(_gameState);
             _audioManager = new AudioManager("soundEffects");
-            _sceneRenderer = new SceneManager(_gameState, _graphics);
+            _sceneRenderer = new SceneManager(_gameState, _graphics, this.Content);
 
             _ = new ScoreManager(_gameState);
             _gameLoopManager = new GameLoopManager(_gameState);
@@ -49,16 +48,16 @@ namespace Tetris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _audioManager.LoadContent(this.Content);
-            _sceneRenderer.LoadContent(this.Content);
+            _sceneRenderer.LoadContent();
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
 
-            _inputManager.Update(gameTime);
+            _inputManager.Update(gameTime, Exit);
             
             if (_gameState.CurrentStatus == GameStatus.Playing)
                 _gameLoopManager.Update(gameTime);
@@ -68,7 +67,7 @@ namespace Tetris
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(15, 15, 15));
             _spriteBatch.Begin();
             _sceneRenderer.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
@@ -76,4 +75,3 @@ namespace Tetris
         }
     }
 }
-
