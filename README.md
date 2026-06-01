@@ -5,6 +5,8 @@ Juego publicado en: [miguelacs23.itch.io/tetris](https://miguelacs23.itch.io/tet
 <img src="assets/start.png" alt="Inicio del juego" width="400">
 <img src="assets/inGame.png" alt="En el juego" width="400">
 
+<video src="https://github.com/user-attachments/assets/e663621d-949a-4a73-a9d1-c7ff49629dab"
+width="320" controls muted autoplay loop></video>
 
 ## Descripcion:
 
