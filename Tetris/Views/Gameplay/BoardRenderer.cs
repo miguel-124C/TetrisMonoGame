@@ -1,22 +1,36 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Runtime.Intrinsics.Arm;
 using Tetris.Enums;
 using Tetris.Helpers;
 using Tetris.Models;
 
 namespace Tetris.Views.Gameplay
 {
-    internal class BoardRenderer(GameState gameState, GraphicsDeviceManager gdm, ContentManager cm)
-        : IRenderer(gdm, cm)
+    internal class BoardRenderer : IRenderer
     {
-        private readonly GameState _gameState = gameState;
+        private readonly GameState _gameState;
 
         private readonly int _blockSize = Constants.BlockSize;
 
-        private readonly Vector2 _boardOffset = new(234, 19);
-        private readonly Vector2 _boardSize = new(222, 442);
-        private readonly int _gridSize = 2;
+        private readonly Vector2 _boardOffset;
+        private readonly Vector2 _boardSize;
+        private readonly int _gridSize = Constants.GridSize;
+
+        public BoardRenderer (GameState gameState, GraphicsDeviceManager gdm, ContentManager cm) : base(gdm, cm)
+        {
+            _gameState = gameState;
+
+            _boardOffset = new(0, 0);
+
+            var cols = _gameState.GameBoard.Col;
+            var rows = _gameState.GameBoard.Row;
+
+            var width  = (_blockSize * cols) + (_gridSize * (cols + 1));
+            var height = (_blockSize * rows) + (_gridSize * (rows + 1));
+            _boardSize = new(width, height);
+        }
 
         public override void LoadContent(){
             LoadBasicContent();

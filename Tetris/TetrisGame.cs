@@ -26,6 +26,9 @@ namespace Tetris
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            _graphics.PreferredBackBufferWidth = Constants.ScreenWidth;
+            _graphics.PreferredBackBufferHeight = Constants.ScreenHeight;
         }
 
         protected override void Initialize()
