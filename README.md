@@ -22,6 +22,11 @@ Implementando los patrones de diseños:
 
 ## Levantar el proyecto:
 
+* Cambiar de directorio
+    ``` bash
+    cd Tetris
+    ```
+
 * Construir el proyecto:
     ``` bash
     dotnet build
@@ -29,7 +34,7 @@ Implementando los patrones de diseños:
 
 * Levantar el proyecto:
     ``` bash
-    dotnet run --project .\Tetris\Tetris.csproj
+    dotnet run
     ```
 
 ## Controles:
