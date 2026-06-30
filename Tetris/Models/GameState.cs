@@ -111,6 +111,11 @@ namespace Tetris.Models
             }
         }
 
+        public void ReturnMenu()
+        {
+            CurrentStatus = GameStatus.Menu;
+        }
+
         public void TriggerGameOver() => CurrentStatus = GameStatus.GameOver;
 
         public void ChangePiece()

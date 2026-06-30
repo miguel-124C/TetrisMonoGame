@@ -34,18 +34,10 @@ namespace Tetris.Views
             var positionStatsText = new Vector2((_width - sizeStatsText.X) / 2, (_height - sizeStatsText.Y) / 2);
             spriteBatch.DrawString(_spriteFont18, statsText, positionStatsText, Color.White);
 
-            DrawInstruccion(spriteBatch, "Press Enter to Restart", alpha, false);
-            DrawInstruccion(spriteBatch, "Press Escape to Exit", alpha, true);
-        }
-
-        private void DrawInstruccion(SpriteBatch sb, string text, float alpha, bool isRight)
-        {
-            var offsetText = 10;
-            var sizeText = _spriteFont18.MeasureString(text);
-            var position = (isRight)
-                ? new Vector2(_width - sizeText.X - offsetText, _height - sizeText.Y - offsetText)
-                : new Vector2(offsetText, _height - sizeText.Y - offsetText);
-            sb.DrawString(_spriteFont18, text, position, Color.White * alpha);
+            var instruction = "Press Enter to Resume - Esc to go Menu";
+            var sizeInst = _spriteFont12.MeasureString(instruction);
+            var posInst = new Vector2((_width - sizeInst.X) / 2, (_height - sizeInst.Y));
+            spriteBatch.DrawString(_spriteFont12, instruction, posInst, Color.White * alpha);
         }
 
         public override void LoadContent()

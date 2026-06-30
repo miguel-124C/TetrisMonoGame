@@ -34,9 +34,9 @@ namespace Tetris.Views
             // small footer
             var footer = "Arrow keys to move | Arrow Up to rotate | Space to hard drop";
             var footerScale = 0.66f;
-            var sizeFooter = _spriteFont18.MeasureString(footer) * footerScale;
+            var sizeFooter = _spriteFont12.MeasureString(footer) * footerScale;
             var footerPos = new Vector2((_width - sizeFooter.X) / 2, _height - sizeFooter.Y - 12);
-            spriteBatch.DrawString(_spriteFont18, footer, footerPos, Color.White * 0.6f, 0f, Vector2.Zero, footerScale, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(_spriteFont12, footer, footerPos, Color.White * 0.6f, 0f, Vector2.Zero, footerScale, SpriteEffects.None, 0f);
         }
 
         public override void UnLoad()

@@ -14,10 +14,10 @@ namespace Tetris.Views
 
             // instructions
             float alpha = (float)Math.Abs(Math.Sin(gameTime.TotalGameTime.TotalSeconds * 2));
-            var instruction = "Press Enter to Resume - Esc to Exit";
-            var sizeInst = _spriteFont18.MeasureString(instruction);
+            var instruction = "Press Enter to Resume - Esc to go Menu";
+            var sizeInst = _spriteFont12.MeasureString(instruction);
             var posInst = new Vector2((_width - sizeInst.X) / 2, (_height - sizeInst.Y));
-            spriteBatch.DrawString(_spriteFont18, instruction, posInst, Color.White * alpha);
+            spriteBatch.DrawString(_spriteFont12, instruction, posInst, Color.White * alpha);
         }
 
         public override void LoadContent()

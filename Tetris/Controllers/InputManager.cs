@@ -17,13 +17,13 @@ namespace Tetris.Controllers
         public void Update(GameTime gameTime, Action closeGame)
         {
             if (_gameState.CurrentStatus == GameStatus.Menu)
-                HandleInputInMenu();
+                HandleInputInMenu(closeGame);
             else if (_gameState.CurrentStatus == GameStatus.Playing)
                 HandleInputInPlaying(gameTime);
             else if (_gameState.CurrentStatus == GameStatus.Paused)
-                HandleInputInPaused(closeGame);
+                HandleInputInPaused();
             else if (_gameState.CurrentStatus == GameStatus.GameOver)
-                HandleInputInGameOver(closeGame);
+                HandleInputInGameOver();
         }
 
         private void HandleInputInPlaying(GameTime gameTime)
@@ -69,33 +69,35 @@ namespace Tetris.Controllers
             _previousKeyboardState = currentKeyboardState;
         }
 
-        private void HandleInputInMenu()
-        {
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-            if (IsKeyPressed(Keys.Enter, currentKeyboardState))
-                _gameState.StartGame();
-
-            _previousKeyboardState = currentKeyboardState;
-        }
-
-        private void HandleInputInPaused(Action closeGame)
-        {
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-            if (IsKeyPressed(Keys.Escape, currentKeyboardState))
-                closeGame();
-            else if (IsKeyPressed(Keys.Enter, currentKeyboardState))
-                _gameState.TogglePause();
-
-            _previousKeyboardState = currentKeyboardState;
-        }
-
-        private void HandleInputInGameOver(Action closeGame)
+        private void HandleInputInMenu(Action closeGame)
         {
             KeyboardState currentKeyboardState = Keyboard.GetState();
             if (IsKeyPressed(Keys.Enter, currentKeyboardState))
                 _gameState.StartGame();
             else if (IsKeyPressed(Keys.Escape, currentKeyboardState))
                 closeGame();
+
+            _previousKeyboardState = currentKeyboardState;
+        }
+
+        private void HandleInputInPaused()
+        {
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+            if (IsKeyPressed(Keys.Escape, currentKeyboardState))
+                _gameState.ReturnMenu();
+            else if (IsKeyPressed(Keys.Enter, currentKeyboardState))
+                _gameState.TogglePause();
+
+            _previousKeyboardState = currentKeyboardState;
+        }
+
+        private void HandleInputInGameOver()
+        {
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+            if (IsKeyPressed(Keys.Enter, currentKeyboardState))
+                _gameState.StartGame();
+            else if (IsKeyPressed(Keys.Escape, currentKeyboardState))
+                _gameState.ReturnMenu();
 
             _previousKeyboardState = currentKeyboardState;
         }

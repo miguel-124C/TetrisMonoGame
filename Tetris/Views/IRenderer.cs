@@ -9,6 +9,7 @@ namespace Tetris.Views
         protected Texture2D _blankTexture;
         protected SpriteFont _spriteFont48;
         protected SpriteFont _spriteFont18;
+        protected SpriteFont _spriteFont12;
 
         protected readonly int _width;
         protected readonly int _height;
@@ -32,8 +33,9 @@ namespace Tetris.Views
         public abstract void LoadContent();
         protected void LoadBasicContent()
         {
-            _spriteFont48 = contentManager.Load<SpriteFont>("Fonts/Arial48");
-            _spriteFont18 = contentManager.Load<SpriteFont>("Fonts/Arial18");
+            _spriteFont48 = contentManager.Load<SpriteFont>("Fonts/PressStart2P48");
+            _spriteFont18 = contentManager.Load<SpriteFont>("Fonts/PressStart2P18");
+            _spriteFont12 = contentManager.Load<SpriteFont>("Fonts/PressStart2P12");
         }
         public abstract void UnLoad();
 
