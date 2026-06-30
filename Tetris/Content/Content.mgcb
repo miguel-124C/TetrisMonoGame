@@ -13,26 +13,26 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/Arial12.spritefont
+#begin Fonts/PressStart2P12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Arial12.spritefont
+/build:Fonts/PressStart2P12.spritefont
 
-#begin Fonts/Arial18.spritefont
+#begin Fonts/PressStart2P18.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Arial18.spritefont
+/build:Fonts/PressStart2P18.spritefont
 
-#begin Fonts/Arial48.spritefont
+#begin Fonts/PressStart2P48.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Arial48.spritefont
+/build:Fonts/PressStart2P48.spritefont
 
 #begin soundEffects/game_over.wav
 /importer:WavImporter
